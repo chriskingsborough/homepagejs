@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+#  custom gitignores
+api/public/images/*
+api/data/homepage.db
+.DS_STORE
