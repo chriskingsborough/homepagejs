@@ -105,6 +105,6 @@ dist
 
 
 #  custom gitignores
-api/public/images/*
+api/public/images/*.jpg
 api/data/homepage.db
 .DS_STORE

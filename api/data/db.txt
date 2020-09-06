@@ -1,0 +1,7 @@
+CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, date_finished DATE DEFAULT NULL);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE photos (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+photo_path TEXT,
+description TEXT
+);

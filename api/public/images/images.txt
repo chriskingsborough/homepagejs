@@ -1,0 +1,1 @@
+All images live here. Use scp to transfer to server. Command to come.
