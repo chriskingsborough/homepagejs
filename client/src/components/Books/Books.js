@@ -1,5 +1,6 @@
 import React from 'react';
 import './Books.css';
+import Config from '../../config/client';
 
 class Books extends React.Component {
     constructor(props) {
@@ -14,7 +15,10 @@ class Books extends React.Component {
 
     componentDidMount() {
         fetch(
-            'http://0.0.0.0:5000/books'
+            `http://${Config.url}:${Config.port}/books`,
+            {headers: {
+                Authorization: Config.apiKey
+            }}
         )
         .then(response => {
             return response.json();

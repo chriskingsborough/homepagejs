@@ -6,8 +6,11 @@ var logger = require('morgan');
 var cors = require('cors');
 
 var booksRouter = require('./routes/books');
-var contactRouter = require('./routes/contact');
 var photosRouter = require('./routes/photos');
+
+// get config
+var config = require('config.json')('./config/env.json');
+
 var app = express();
 
 app.use(cors());
@@ -20,8 +23,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// check security key
+app.use('/', function(req, res, next) {
+  // get the auth
+  const apiKey = req.headers.Authorization;
+  if (apiKey === config.apiKey) {
+    next()
+  } else {
+    res.status(404).send({status: "Unauthorized"});
+  }
+})
+
 app.use('/books', booksRouter);
-app.use('/contact', contactRouter);
 app.use('/photos', photosRouter);
 
 // catch 404 and forward to error handler
