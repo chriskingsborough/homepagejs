@@ -1,7 +1,8 @@
 import React from 'react';
 import './Photos.css';
+import Config from '../../config/client';
 
-const url = "http://0.0.0.0:5000";
+const url = `http://${Config.url}:${Config.port}`;
 
 class Photo extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class Photo extends React.Component {
         return (
             <div className="container">
                 <div className="gallery" align="center">
-                    <a target="_blank" href={this.state.imageSrc}>
+                    <a target="_blank" href={this.state.imageSrc} rel="noopener noreferrer">
                         <img src={this.state.imageSrc} alt={this.state.description} width="800" height="600"/>
                     </a>
                     <div className="desc">{this.state.description}</div>
@@ -40,7 +41,10 @@ class Photos extends React.Component {
 
     componentDidMount() {
         fetch(
-            `${url}/photos`
+            `${url}/photos`,
+            {headers:{
+                Authorization: Config.apiKey
+            }}
         )
         .then(response => {
             return response.json();

@@ -15,6 +15,16 @@ router.get('/', function (req, res) {
         })
 })
 // delete photos
+router.delete('/:id', function(req, res) {
+    const {id} = req.params;
+    db.run(`DELETE FROM photos where id = ${id}`, err => {
+        console.error(err);
+        if (err) {
+            res.status(400).json(err);
+        }
+        res.status(204);
+    })
+})
 
 // post photos
 router.post('/', function(req, res) {
@@ -33,7 +43,7 @@ router.post('/', function(req, res) {
         if (err) {
             res.status(400).json(err);
         }
-        res.status(200).json({status: 'Recorded Inserted'});
+        res.status(200).json({status: 'Recorde Inserted'});
     })
 })
 
