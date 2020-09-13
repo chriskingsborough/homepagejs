@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // check security key
 app.use('/', function(req, res, next) {
   // get the auth
-  const apiKey = req.headers.Authorization;
+  const apiKey = req.headers.authorization;
   if (apiKey === config.apiKey) {
     next()
   } else {
