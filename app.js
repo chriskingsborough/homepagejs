@@ -4,12 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+require('dotenv').config();
 
 var booksRouter = require('./routes/books');
 var photosRouter = require('./routes/photos');
-
-// get config
-var config = require('config.json')('./config/env.json');
 
 var app = express();
 
@@ -22,17 +20,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('build'));
 
 // check security key
 app.use('/', function(req, res, next) {
   // get the auth
   const apiKey = req.headers.authorization;
-  if (apiKey === config.apiKey) {
+  if (req.method === 'GET' || apiKey === process.env.API_KEY) {
     next()
   } else {
     res.status(404).send({status: "Unauthorized"});
   }
 })
+
+app.get('/', function(req, res) {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
 
 app.use('/books', booksRouter);
 app.use('/photos', photosRouter);
@@ -52,5 +55,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT);
 
 module.exports = app;
